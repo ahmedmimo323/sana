@@ -1,45 +1,86 @@
+:root {
+    --primary: #0077b6;
+    --primary-light: #caf0f8;
+    --accent: #ffb703;
+    --bg-main: #f0f4f8;
+    --text-main: #2d3748;
+    --card-bg: #ffffff;
+    --shadow: 0 10px 30px rgba(0, 119, 182, 0.08);
+}
+
+.dark {
+    --bg-main: #1a202c;
+    --text-main: #e2e8f0;
+    --card-bg: #2d3748;
+}
+
+.high-contrast { background: #000 !important; color: #ffff00 !important; }
+
 body {
-    margin: 0;
-    font-family: Arial;
-    background: 
-    linear-gradient(rgba(204,231,255,0.8), rgba(204,231,255,0.8)),
-    url('https://assets.simpleviewinc.com/simpleview/image/upload/c_limit,h_1200,q_75,w_1200/v1/crm/lexington/Hope-Center-Website-Logo-Transparent-BG_BF73E67E-0635-BE67-A1A1BE86C2209187-bf73e55ad9cdfd7_bf73ef73-e193-f401-35a1b027e4b79562.png');
-    background-size: cover;
+    margin: 0; font-family: 'Cairo', sans-serif;
+    background-color: var(--bg-main); color: var(--text-main);
+    transition: 0.4s; direction: rtl; line-height: 1.6;
 }
 
-.logo {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    width: 120px;
+header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 150%);
+    color: white; padding: 60px 20px; text-align: center;
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
 }
 
-.container {
-    background: white;
-    padding: 40px;
-    margin: 120px auto;
-    width: 90%;
-    max-width: 500px;
-    border-radius: 15px;
-    text-align: center;
+nav {
+    display: flex; justify-content: space-around; align-items: center;
+    padding: 15px; background: var(--card-bg); position: sticky; top: 0; z-index: 100;
 }
 
-input, textarea {
-    width: 90%;
-    padding: 12px;
-    margin: 10px 0;
+.nav-tools button {
+    background: var(--primary); color: white; border: none;
+    width: 40px; height: 40px; border-radius: 50%; cursor: pointer; margin: 0 5px;
 }
 
-button {
-    width: 90%;
-    padding: 12px;
-    margin: 8px 0;
-    background: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 8px;
+.login-trigger {
+    background: #28a745; color: white; border: none;
+    padding: 10px 20px; border-radius: 25px; cursor: pointer; font-weight: bold;
 }
 
-.section {
-    display: none;
+.container { padding: 40px 20px; max-width: 1000px; margin: auto; }
+
+.card {
+    background: var(--card-bg); padding: 30px; border-radius: 20px;
+    box-shadow: var(--shadow); margin-bottom: 30px; border-top: 5px solid var(--primary);
 }
+
+/* تحسين البحث والخدمات */
+#serviceSearch {
+    width: 100%; padding: 12px; border-radius: 25px; border: 1px solid #ddd; margin-bottom: 20px;
+}
+
+.services-container { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
+
+.service-item {
+    background: var(--bg-main); padding: 15px; border-radius: 15px; width: 150px; text-align: center; transition: 0.3s;
+}
+
+.service-item:hover { transform: translateY(-5px); background: var(--primary); color: white; }
+
+/* قصص النجاح */
+.stories-grid { display: flex; flex-direction: column; gap: 15px; }
+.story-item { display: flex; align-items: center; gap: 15px; background: var(--bg-main); padding: 15px; border-radius: 15px; }
+.story-item img { width: 50px; height: 50px; border-radius: 50%; }
+
+/* الخريطة والقوائم */
+iframe { width: 100%; height: 300px; border-radius: 15px; border: none; }
+.resources-list { list-style: none; padding: 0; text-align: right; }
+.resources-list li { margin: 10px 0; }
+.resources-list a { color: var(--primary); text-decoration: none; font-weight: bold; }
+
+/* النافذة المنبثقة */
+.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); }
+.modal-content { background: var(--card-bg); margin: 10% auto; padding: 30px; width: 320px; border-radius: 20px; text-align: center; position: relative; }
+.close { position: absolute; left: 20px; top: 10px; font-size: 25px; cursor: pointer; }
+.input-group { background: var(--bg-main); margin: 10px 0; padding: 10px; border-radius: 10px; display: flex; align-items: center; }
+.input-group input { border: none; background: none; outline: none; width: 100%; padding: 5px; }
+.btn-login { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 10px; cursor: pointer; }
+
+footer { text-align: center; padding: 20px; background: var(--card-bg); margin-top: 40px; }
+.large-text { font-size: 1.4rem; }

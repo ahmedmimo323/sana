@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>منصة تعليمية لذوي الاحتياجات الخاصة</title>
+<title>دعم ذوي الاحتياجات الخاصة</title>
 
 <style>
 :root {
@@ -19,15 +19,14 @@ body {
     background: var(--bg);
     color: var(--text);
     direction: rtl;
+    transition: 0.3s;
 }
 
-/* وضع ليلي */
 .dark {
     --bg: #121212;
     --text: #fff;
 }
 
-/* تباين عالي */
 .high-contrast {
     background: black !important;
     color: yellow !important;
@@ -36,7 +35,7 @@ body {
 header {
     background: linear-gradient(135deg, #0077b6, #00b4d8);
     color: white;
-    padding: 25px;
+    padding: 30px;
     text-align: center;
 }
 
@@ -49,7 +48,7 @@ button {
     padding: 10px;
     margin: 5px;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     background: var(--main);
     color: white;
     cursor: pointer;
@@ -59,36 +58,38 @@ button {
     padding: 20px;
 }
 
+/* Grid احترافي */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
 .card {
     background: white;
     padding: 20px;
-    margin: 15px 0;
     border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
 }
 
 .dark .card {
     background: #1e1e1e;
 }
 
-input {
-    width: 90%;
-    padding: 10px;
-    margin: 10px 0;
-}
-
-.hidden {
-    display: none;
-}
-
-/* تكبير الخط */
 .large-text {
     font-size: 20px;
 }
 
 iframe {
     width: 100%;
-    height: 250px;
-    border-radius: 10px;
+    height: 300px;
+    border-radius: 15px;
+    border: none;
 }
 </style>
 
@@ -96,103 +97,67 @@ iframe {
 
 <body>
 
-<header role="banner">
-    <h1 tabindex="0">🎓 منصة تعليمية لذوي الاحتياجات الخاصة</h1>
-    <p tabindex="0">تعلم بطريقة سهلة ومناسبة للجميع</p>
+<header>
+    <h1>💙 دعم ذوي الاحتياجات الخاصة</h1>
+    <p>خدمات ومساعدة في مكان واحد</p>
 </header>
 
 <nav>
     <button onclick="toggleDark()">🌙 وضع ليلي</button>
-    <button onclick="toggleContrast()">⚫ تباين عالي</button>
-    <button onclick="increaseText()">🔍 تكبير الخط</button>
-    <button onclick="speak()">🔊 قراءة الصفحة</button>
-    <button onclick="logout()">🚪 خروج</button>
+    <button onclick="toggleContrast()">⚫ تباين</button>
+    <button onclick="increaseText()">🔍 تكبير</button>
+    <button onclick="speak()">🔊 قراءة</button>
 </nav>
 
-<!-- 🔐 تسجيل الدخول -->
-<div id="loginBox" class="container">
-    <h2>تسجيل الدخول</h2>
-    <input aria-label="اسم المستخدم" id="user" placeholder="اسم المستخدم">
-    <input aria-label="كلمة المرور" type="password" id="pass" placeholder="كلمة المرور">
-    <button onclick="login()">دخول</button>
-</div>
+<div class="container">
 
-<!-- 🎓 المحتوى -->
-<div id="content" class="container hidden">
+    <div class="grid">
 
-    <div class="card" tabindex="0">
-        <h2>مرحباً 👋</h2>
-        <p>أنت الآن داخل المنصة التعليمية</p>
+        <div class="card">
+            <h2>📌 من نحن</h2>
+            <p>موقع لدعم ذوي الاحتياجات الخاصة وتوفير الخدمات والمعلومات.</p>
+        </div>
+
+        <div class="card">
+            <h2>🛠️ خدماتنا</h2>
+            <p>✔ مراكز تأهيل<br>✔ دعم نفسي<br>✔ أدوات مساعدة</p>
+        </div>
+
+        <div class="card">
+            <h2>📞 تواصل</h2>
+            <p>01000000000<br>help@example.com</p>
+        </div>
+
     </div>
 
-    <div class="card" tabindex="0">
-        <h2>🎥 درس تعليمي</h2>
-        <iframe title="فيديو تعليمي" src="https://www.youtube.com/embed/3JluqTojuME"></iframe>
-    </div>
+    <div class="card">
+        <h2>🗺️ أماكن المراكز</h2>
 
-    <div class="card" tabindex="0">
-        <h2>🎥 مهارات حياتية</h2>
-        <iframe title="فيديو مهارات" src="https://www.youtube.com/embed/Z1Yd7upQsXY"></iframe>
+        <!-- خريطة Google -->
+        <iframe src="https://www.google.com/maps?q=rehabilitation+center+Egypt&output=embed"></iframe>
+
     </div>
 
 </div>
 
 <script>
-// 🌙 الوضع الليلي
 function toggleDark() {
     document.body.classList.toggle("dark");
 }
 
-// ⚫ التباين العالي
 function toggleContrast() {
     document.body.classList.toggle("high-contrast");
 }
 
-// 🔍 تكبير الخط
 function increaseText() {
     document.body.classList.toggle("large-text");
 }
 
-// 🔊 قراءة الصفحة
 function speak() {
-    let text = document.body.innerText;
-    let speech = new SpeechSynthesisUtterance(text);
+    let speech = new SpeechSynthesisUtterance(document.body.innerText);
     speech.lang = "ar";
     window.speechSynthesis.speak(speech);
 }
-
-// 🔐 تسجيل الدخول
-function login() {
-    let u = document.getElementById("user").value;
-    let p = document.getElementById("pass").value;
-
-    if (u === "admin" && p === "1234") {
-        document.getElementById("loginBox").classList.add("hidden");
-        document.getElementById("content").classList.remove("hidden");
-        localStorage.setItem("login", "true");
-    } else {
-        alert("خطأ في البيانات");
-    }
-}
-
-// 🚪 خروج
-function logout() {
-    localStorage.removeItem("login");
-    location.reload();
-}
-
-// حفظ الحالة
-window.onload = function() {
-    if (localStorage.getItem("login") === "true") {
-        document.getElementById("loginBox").classList.add("hidden");
-        document.getElementById("content").classList.remove("hidden");
-    }
-}
-
-// ⌨️ دعم الكيبورد (زر Enter)
-document.addEventListener("keydown", function(e) {
-    if (e.key === "Enter") login();
-});
 </script>
 
 </body>

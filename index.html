@@ -1,164 +1,50 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>دعم ذوي الاحتياجات الخاصة</title>
-
-<style>
-:root {
-    --main: #0077b6;
-    --bg: #f4f4f4;
-    --text: #222;
-}
-
-body {
-    margin: 0;
-    font-family: 'Cairo', Arial;
-    background: var(--bg);
-    color: var(--text);
-    direction: rtl;
-    transition: 0.3s;
-}
-
-.dark {
-    --bg: #121212;
-    --text: #fff;
-}
-
-.high-contrast {
-    background: black !important;
-    color: yellow !important;
-}
-
-header {
-    background: linear-gradient(135deg, #0077b6, #00b4d8);
-    color: white;
-    padding: 30px;
-    text-align: center;
-}
-
-nav {
-    text-align: center;
-    padding: 10px;
-}
-
-button {
-    padding: 10px;
-    margin: 5px;
-    border: none;
-    border-radius: 10px;
-    background: var(--main);
-    color: white;
-    cursor: pointer;
-}
-
-.container {
-    padding: 20px;
-}
-
-/* Grid احترافي */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-}
-
-.card {
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-    transition: 0.3s;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-}
-
-.dark .card {
-    background: #1e1e1e;
-}
-
-.large-text {
-    font-size: 20px;
-}
-
-iframe {
-    width: 100%;
-    height: 300px;
-    border-radius: 15px;
-    border: none;
-}
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دعم ذوي الاحتياجات الخاصة</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 </head>
-
 <body>
 
 <header>
     <h1>💙 دعم ذوي الاحتياجات الخاصة</h1>
-    <p>خدمات ومساعدة في مكان واحد</p>
+    <p>بوابتكم للوصول إلى الخدمات والتمكين</p>
 </header>
 
-<nav>
+<nav aria-label="أدوات الوصول">
     <button onclick="toggleDark()">🌙 وضع ليلي</button>
     <button onclick="toggleContrast()">⚫ تباين</button>
     <button onclick="increaseText()">🔍 تكبير</button>
     <button onclick="speak()">🔊 قراءة</button>
 </nav>
 
-<div class="container">
-
+<main class="container">
     <div class="grid">
-
-        <div class="card">
+        <section class="card">
             <h2>📌 من نحن</h2>
-            <p>موقع لدعم ذوي الاحتياجات الخاصة وتوفير الخدمات والمعلومات.</p>
-        </div>
+            <p>منصة رقمية تهدف لتسهيل وصول ذوي الهمم إلى المعلومات والمرافق والخدمات المتخصصة في مكان واحد.</p>
+        </section>
 
-        <div class="card">
+        <section class="card">
             <h2>🛠️ خدماتنا</h2>
-            <p>✔ مراكز تأهيل<br>✔ دعم نفسي<br>✔ أدوات مساعدة</p>
-        </div>
+            <p>✔ مراكز تأهيل معتمدة<br>✔ استشارات دعم نفسي<br>✔ توفير أدوات مساعدة وتقنيات ذكية</p>
+        </section>
 
-        <div class="card">
-            <h2>📞 تواصل</h2>
-            <p>01000000000<br>help@example.com</p>
-        </div>
-
+        <section class="card">
+            <h2>📞 تواصل معنا</h2>
+            <p><b>الهاتف:</b> 01000000000<br><b>البريد:</b> help@example.com</p>
+        </section>
     </div>
 
-    <div class="card">
-        <h2>🗺️ أماكن المراكز</h2>
+    <section class="card">
+        <h2>🗺️ خريطة المراكز المتاحة</h2>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3451.171124619472!2d31.2357116!3d30.0444196!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzDCsDAyJzM5LjkiTiAzMcKwMTQnMDguNiJF!5e0!3m2!1sar!2seg!4v1625000000000!5m2!1sar!2seg"></iframe>
+    </section>
+</main>
 
-        <!-- خريطة Google -->
-        <iframe src="https://www.google.com/maps?q=rehabilitation+center+Egypt&output=embed"></iframe>
-
-    </div>
-
-</div>
-
-<script>
-function toggleDark() {
-    document.body.classList.toggle("dark");
-}
-
-function toggleContrast() {
-    document.body.classList.toggle("high-contrast");
-}
-
-function increaseText() {
-    document.body.classList.toggle("large-text");
-}
-
-function speak() {
-    let speech = new SpeechSynthesisUtterance(document.body.innerText);
-    speech.lang = "ar";
-    window.speechSynthesis.speak(speech);
-}
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>

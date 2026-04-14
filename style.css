@@ -6,7 +6,7 @@
     --text-main: #2d3748;
     --card-bg: #ffffff;
     --shadow: 0 10px 30px rgba(0, 119, 182, 0.08);
-    --transition: all 0.3s ease-in-out; /* متغير للحركات الموحدة */
+    --transition: all 0.3s ease-in-out;
 }
 
 .dark {
@@ -18,32 +18,69 @@
 
 .high-contrast { background: #000 !important; color: #ffff00 !important; }
 
-/* تعريف حركة الظهور التدريجي (Fade In) */
+/* --- تعريف الحركات (Keyframes) --- */
+
+/* حركة تغيير ألوان الخلفية */
+@keyframes gradientBg {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* تعريف حركة النبض للأزرار الهامة */
 @keyframes pulse {
     0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
     70% { box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
     100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
 }
 
+/* --- تنسيقات الجسم (Body) والخلفية المتحركة --- */
 body {
     margin: 0; font-family: 'Cairo', sans-serif;
-    background-color: var(--bg-main); color: var(--text-main);
+    color: var(--text-main);
     transition: var(--transition); direction: rtl; line-height: 1.6;
-    overflow-x: hidden; /* لمنع ظهور شريط تمرير أفقي بسبب الحركات */
+    overflow-x: hidden;
+    position: relative; /* ضروري للطبقة الخلفية */
 }
 
+/* الطبقة الخلفية المتحركة */
+body::before {
+    content: "";
+    position: fixed; /* ثابتة أثناء التمرير */
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1; /* خلف كل المحتوى */
+    
+    /* تدرج لوني هادئ ومريح */
+    background: linear-gradient(-45deg, var(--bg-main), var(--primary-light), var(--bg-main), #e3f2fd);
+    background-size: 400% 400%; /* تكبير التدرج لتسهيل الحركة */
+    
+    /* تشغيل حركة الخلفية */
+    animation: gradientBg 15s ease infinite; /* حركة بطيئة جداً وهادئة */
+    opacity: 0.8; /* جعلها شفافة قليلاً لتقليل التشتت */
+}
+
+.dark body::before {
+    /* تدرج لوني أغمق للوضع الليلي */
+    background: linear-gradient(-45deg, #1a202c, #2d3748, #1a202c, #10151d);
+    background-size: 400% 400%;
+    opacity: 1;
+}
+
+/* --- رأس الصفحة (Header) --- */
 header {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 150%);
+    /* جعل خلفية الـ header شفافة جزئياً لتظهر خلفية الـ body */
+    background: linear-gradient(135deg, rgba(0, 119, 182, 0.8) 0%, rgba(255, 183, 3, 0.8) 150%);
+    backdrop-filter: blur(5px); /* تأثير ضبابية خلف الـ header */
     color: white; padding: 60px 20px; text-align: center;
     clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
-    animation: fadeIn 1s ease-out; /* حركة عند تحميل الصفحة */
+    animation: fadeIn 1s ease-out;
 }
+
+/* بقية التنسيقات (لم تتغير، ولكن تم دمجها لسهولة النسخ) */
 
 nav {
     display: flex; justify-content: space-around; align-items: center;
@@ -59,7 +96,7 @@ nav {
 }
 
 .nav-tools button:hover {
-    transform: scale(1.1) rotate(15deg); /* تكبير وتدوير بسيط */
+    transform: scale(1.1) rotate(15deg);
     background: var(--accent);
 }
 
@@ -67,25 +104,23 @@ nav {
     background: #28a745; color: white; border: none;
     padding: 10px 20px; border-radius: 25px; cursor: pointer; font-weight: bold;
     transition: var(--transition);
-    animation: pulse 2s infinite; /* حركة نبض مستمرة لجذب الانتباه */
+    animation: pulse 2s infinite;
 }
 
 .login-trigger:hover {
     background: #218838;
     transform: scale(1.05);
-    animation: none; /* إيقاف النبض عند الوقوف عليه */
+    animation: none;
 }
 
 .container { padding: 40px 20px; max-width: 1000px; margin: auto; }
 
-/* فئة لإخفاء العناصر قبل ظهورها عند التمرير */
 .animate-on-scroll {
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
-/* فئة يتم إضافتها بواسطة الجافا سكريبت لتشغيل الحركة */
 .animate-in {
     opacity: 1;
     transform: translateY(0);
@@ -98,11 +133,10 @@ nav {
 }
 
 .card:hover {
-    transform: translateY(-5px); /* ارتفاع بسيط للبطاقة */
+    transform: translateY(-5px);
     box-shadow: 0 15px 35px rgba(0, 119, 182, 0.15);
 }
 
-/* تحسين البحث والخدمات */
 #serviceSearch {
     width: 100%; padding: 12px; border-radius: 25px; border: 1px solid #ddd; margin-bottom: 20px;
     transition: var(--transition);
@@ -127,15 +161,9 @@ nav {
     color: white;
 }
 
-.service-item i {
-    transition: var(--transition);
-}
+.service-item i { transition: var(--transition); }
+.service-item:hover i { transform: translateY(-5px); }
 
-.service-item:hover i {
-    transform: translateY(-5px); /* تحريك الأيقونة للأعلى */
-}
-
-/* قصص النجاح */
 .stories-grid { display: flex; flex-direction: column; gap: 15px; }
 .story-item { 
     display: flex; align-items: center; gap: 15px; background: var(--bg-main); 
@@ -146,13 +174,12 @@ nav {
 .story-item img { width: 50px; height: 50px; border-radius: 50%; transition: var(--transition); }
 .story-item:hover img { transform: scale(1.1); border: 2px solid var(--primary); }
 
-/* الخريطة والقوائم والنماذج */
 iframe { width: 100%; height: 300px; border-radius: 15px; border: none; transition: var(--transition); }
 iframe:hover { box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
 
 .resources-list { list-style: none; padding: 0; text-align: right; }
 .resources-list li { margin: 10px 0; transition: var(--transition); }
-.resources-list li:hover { transform: translateX(-5px); } /* حركة لليسار */
+.resources-list li:hover { transform: translateX(-5px); }
 .resources-list a { color: var(--primary); text-decoration: none; font-weight: bold; transition: var(--transition); }
 .resources-list a:hover { color: var(--accent); }
 
@@ -165,7 +192,6 @@ input:focus, textarea:focus { border-color: var(--primary); outline: none; box-s
 }
 .btn-send:hover { background: #005f91; transform: translateY(-3px); }
 
-/* النافذة المنبثقة (Modal) */
 .modal { 
     display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; 
     background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); 
@@ -175,7 +201,7 @@ input:focus, textarea:focus { border-color: var(--primary); outline: none; box-s
 .modal-content { 
     background: var(--card-bg); margin: 10% auto; padding: 30px; width: 320px; 
     border-radius: 20px; text-align: center; position: relative; 
-    animation: fadeIn 0.5s ease-out; /* حركة ظهور النافذة */
+    animation: fadeIn 0.5s ease-out;
 }
 
 .close { position: absolute; left: 20px; top: 10px; font-size: 25px; cursor: pointer; transition: var(--transition); }

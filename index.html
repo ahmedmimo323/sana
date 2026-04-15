@@ -10,21 +10,23 @@
 </head>
 <body>
 
-    <div id="loginModal" class="modal">
+    <div id="loginModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
         <div class="modal-content">
-            <span class="close" onclick="closeLogin()">×</span>
+            <button class="close" onclick="closeLogin()" aria-label="إغلاق النافذة">×</button>
             <div class="login-header">
-                <i class="fas fa-user-circle fa-3x"></i>
-                <h2>تسجيل الدخول</h2>
+                <i class="fas fa-user-circle fa-3x" aria-hidden="true"></i>
+                <h2 id="modalTitle">تسجيل الدخول</h2>
             </div>
             <form id="loginForm">
                 <div class="input-group">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" placeholder="البريد الإلكتروني" required>
+                    <label for="loginEmail" class="visually-hidden">البريد الإلكتروني</label>
+                    <i class="fas fa-envelope" aria-hidden="true"></i>
+                    <input type="email" id="loginEmail" placeholder="البريد الإلكتروني" required>
                 </div>
                 <div class="input-group">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" placeholder="كلمة المرور" required>
+                    <label for="loginPass" class="visually-hidden">كلمة المرور</label>
+                    <i class="fas fa-lock" aria-hidden="true"></i>
+                    <input type="password" id="loginPass" placeholder="كلمة المرور" required>
                 </div>
                 <button type="submit" class="btn-login">دخول</button>
             </form>
@@ -40,65 +42,66 @@
 
     <nav aria-label="أدوات الوصول">
         <div class="nav-tools">
-            <button onclick="toggleDark()" title="وضع ليلي"><i class="fas fa-moon"></i></button>
-            <button onclick="toggleContrast()" title="تباين عالي"><i class="fas fa-adjust"></i></button>
-            <button onclick="increaseText()" title="تكبير الخط"><i class="fas fa-search-plus"></i></button>
-            <button onclick="speak()" title="قراءة الموقع"><i class="fas fa-volume-up"></i></button>
+            <button onclick="toggleDark()" aria-label="تفعيل الوضع الليلي" title="وضع ليلي"><i class="fas fa-moon"></i></button>
+            <button onclick="toggleContrast()" aria-label="تفعيل التباين العالي" title="تباين عالي"><i class="fas fa-adjust"></i></button>
+            <button onclick="increaseText()" aria-label="تكبير حجم الخط" title="تكبير الخط"><i class="fas fa-search-plus"></i></button>
+            <button onclick="speak()" aria-label="قراءة محتوى الموقع بصوت مسموع" title="قراءة الموقع"><i class="fas fa-volume-up"></i></button>
         </div>
         <button class="login-trigger" onclick="openLogin()">دخول <i class="fas fa-sign-in-alt"></i></button>
     </nav>
 
-    <main class="container">
+    <main class="container" id="mainContent">
         <section class="card animate-on-scroll">
-            <h2><i class="fas fa-search"></i> ابحث عن خدمة</h2>
+            <h2><i class="fas fa-search" aria-hidden="true"></i> ابحث عن خدمة</h2>
+            <label for="serviceSearch" class="visually-hidden">ابحث في الخدمات المتاحة</label>
             <input type="text" id="serviceSearch" onkeyup="filterServices()" placeholder="ابحث هنا...">
             <div class="services-container">
-                <div class="service-item"><i class="fas fa-wheelchair"></i><h3>أدوات مساعدة</h3></div>
-                <div class="service-item"><i class="fas fa-user-md"></i><h3>استشارات</h3></div>
-                <div class="service-item"><i class="fas fa-hands-helping"></i><h3>دعم نفسي</h3></div>
+                <div class="service-item"><i class="fas fa-wheelchair" aria-hidden="true"></i><h3>أدوات مساعدة</h3></div>
+                <div class="service-item"><i class="fas fa-user-md" aria-hidden="true"></i><h3>استشارات</h3></div>
+                <div class="service-item"><i class="fas fa-hands-helping" aria-hidden="true"></i><h3>دعم نفسي</h3></div>
             </div>
         </section>
 
         <section class="card animate-on-scroll">
-            <h2><i class="fas fa-trophy"></i> قصص نجاح</h2>
+            <h2><i class="fas fa-trophy" aria-hidden="true"></i> قصص نجاح</h2>
             <div class="story-item">
-                <img src="https://ui-avatars.com/api/?name=A&background=0077b6&color=fff" alt="User">
+                <img src="https://ui-avatars.com/api/?name=A&background=0077b6&color=fff" alt="صورة المستخدم أحمد محمد">
                 <p>"الإعاقة لم تمنعني من النجاح." - <b>أحمد محمد</b></p>
             </div>
         </section>
 
         <section class="card blog-section animate-on-scroll">
-            <h2><i class="fas fa-feather-alt"></i> مدونة سند التعليمية</h2>
+            <h2><i class="fas fa-feather-alt" aria-hidden="true"></i> مدونة سند التعليمية</h2>
             <div class="blog-grid">
                 <article class="blog-post">
-                    <div class="blog-image" style="background-image: url('https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=400');"></div>
+                    <div class="blog-image" role="img" aria-label="صورة توضيحية لتهيئة المنزل" style="background-image: url('https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=400');"></div>
                     <div class="blog-content">
                         <span class="blog-category">نصائح</span>
                         <h3>كيفية تهيئة المنزل لمستخدمي الكراسي المتحركة</h3>
                         <p>خطوات بسيطة لجعل الحركة داخل المنزل أكثر سهولة وأماناً...</p>
-                        <a href="#" class="read-more">اقرأ المزيد</a>
+                        <a href="#" class="read-more" aria-label="اقرأ المزيد عن تهيئة المنزل">اقرأ المزيد</a>
                     </div>
                 </article>
                 <article class="blog-post">
-                    <div class="blog-image" style="background-image: url('https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=400');"></div>
+                    <div class="blog-image" role="img" aria-label="صورة لتطبيقات الموبايل" style="background-image: url('https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=400');"></div>
                     <div class="blog-content">
                         <span class="blog-category">تكنولوجيا</span>
                         <h3>أفضل تطبيقات دعم ضعاف البصر لعام 2026</h3>
                         <p>تعرف على أحدث التقنيات التي تساعد في قراءة النصوص ووصف المحيط...</p>
-                        <a href="#" class="read-more">اقرأ المزيد</a>
+                        <a href="#" class="read-more" aria-label="اقرأ المزيد عن تطبيقات ضعاف البصر">اقرأ المزيد</a>
                     </div>
                 </article>
             </div>
         </section>
 
         <section class="card animate-on-scroll">
-            <h2><i class="fas fa-paper-plane"></i> تواصل معنا</h2>
+            <h2><i class="fas fa-paper-plane" aria-hidden="true"></i> تواصل معنا</h2>
             <form id="contactForm">
                 <div class="form-grid">
-                    <input type="text" placeholder="الاسم" required>
-                    <input type="email" placeholder="البريد الإلكتروني" required>
+                    <input type="text" placeholder="الاسم" aria-label="الاسم بالكامل" required>
+                    <input type="email" placeholder="البريد الإلكتروني" aria-label="بريدك الإلكتروني" required>
                 </div>
-                <textarea placeholder="رسالتك هنا..." required></textarea>
+                <textarea placeholder="رسالتك هنا..." aria-label="اكتب رسالتك هنا" required></textarea>
                 <button type="submit" class="btn-send">إرسال</button>
             </form>
         </section>

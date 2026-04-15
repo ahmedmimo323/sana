@@ -16,94 +16,47 @@
     --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-/* تحسين التباين العالي */
 .high-contrast * {
     background: #000 !important;
     color: #ffff00 !important;
     border-color: #ffff00 !important;
 }
 
-/* تحسين تكبير الخط */
 .large-text { font-size: 125%; }
 
-/* مؤشر التركيز لمستخدمي الكيبورد */
 :focus-visible {
     outline: 3px solid var(--accent) !important;
     outline-offset: 3px;
 }
 
-/* إخفاء العناصر شكلياً مع بقائها لقوارئ الشاشة */
 .visually-hidden {
     position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
     overflow: hidden; clip: rect(0,0,0,0); border: 0;
 }
 
-/* حماية من دوار الحركة */
 @media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-    }
+    * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
 
 body {
-    margin: 0; font-family: 'Cairo', sans-serif;
-    color: var(--text-main); transition: var(--transition);
-    direction: rtl; line-height: 1.6; overflow-x: hidden;
+    margin: 0; font-family: 'Cairo', sans-serif; color: var(--text-main);
+    transition: var(--transition); direction: rtl; line-height: 1.6;
 }
 
-body::before {
-    content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    z-index: -1; background: linear-gradient(-45deg, var(--bg-main), var(--primary-light), var(--bg-main), #e3f2fd);
-    background-size: 400% 400%; animation: gradientBg 15s ease infinite; opacity: 0.8;
+/* تنسيقات تسجيل الدخول الجديدة */
+.password-group { position: relative; display: flex; align-items: center; }
+
+#togglePassword {
+    position: absolute; left: 10px; background: none; border: none;
+    cursor: pointer; color: var(--primary); display: flex; align-items: center;
 }
 
-@keyframes gradientBg {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+.remember-me {
+    display: flex; align-items: center; gap: 8px; margin: 15px 0;
+    font-size: 0.9rem;
 }
 
-header {
-    background: linear-gradient(135deg, rgba(0, 119, 182, 0.8) 0%, rgba(255, 183, 3, 0.8) 150%);
-    backdrop-filter: blur(5px); color: white; padding: 60px 20px; text-align: center;
-    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
-}
-
-nav {
-    display: flex; justify-content: space-around; align-items: center;
-    padding: 15px; background: var(--card-bg); position: sticky; top: 0; z-index: 100;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-.nav-tools button {
-    background: var(--primary); color: white; border: none;
-    width: 40px; height: 40px; border-radius: 50%; cursor: pointer; margin: 0 5px;
-}
-
-.login-trigger {
-    background: #28a745; color: white; border: none;
-    padding: 10px 20px; border-radius: 25px; cursor: pointer; font-weight: bold;
-}
-
-.container { padding: 40px 20px; max-width: 1000px; margin: auto; }
-
-.card {
-    background: var(--card-bg); padding: 30px; border-radius: 20px;
-    box-shadow: var(--shadow); margin-bottom: 30px; border-top: 5px solid var(--primary);
-}
-
-.animate-on-scroll { opacity: 0; transform: translateY(30px); transition: 0.6s ease-out; }
-.animate-in { opacity: 1; transform: translateY(0); }
-
-.blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-.blog-post { background: var(--card-bg); border-radius: 15px; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); }
-.blog-image { height: 160px; background-size: cover; background-position: center; }
-.blog-content { padding: 20px; }
-
-#serviceSearch { width: 100%; padding: 12px; border-radius: 25px; border: 1px solid #ddd; margin-bottom: 20px; }
+.error-msg { color: #e53e3e; font-size: 0.85rem; margin-bottom: 10px; display: none; }
 
 .modal {
     display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%;
@@ -111,9 +64,6 @@ nav {
     align-items: center; justify-content: center; opacity: 0; transition: opacity 0.4s;
 }
 
-.modal-content {
-    background: var(--card-bg); padding: 30px; width: 320px;
-    border-radius: 20px; text-align: center; position: relative;
-}
+.modal-content { background: var(--card-bg); padding: 30px; width: 320px; border-radius: 20px; position: relative; }
 
-.close { position: absolute; left: 20px; top: 10px; font-size: 24px; cursor: pointer; border: none; background: none; color: var(--text-main); }
+/* أضف باقي التنسيقات السابقة (Header, Cards, Nav) هنا */

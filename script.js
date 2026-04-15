@@ -1,4 +1,4 @@
-// وظائف الوصول (Accessibility)
+// وظائف الوصول
 function toggleDark() { document.body.classList.toggle("dark"); }
 function toggleContrast() { document.body.classList.toggle("high-contrast"); }
 function increaseText() { document.body.classList.toggle("large-text"); }
@@ -8,20 +8,20 @@ function speak() {
     const text = document.getElementById('mainContent').innerText;
     const msg = new SpeechSynthesisUtterance(text);
     msg.lang = 'ar-SA';
-    msg.rate = 0.9; // سرعة هادئة ومفهومة
+    msg.rate = 0.9;
     window.speechSynthesis.speak(msg);
 }
 
-// وظائف تسجيل الدخول المحسنة
+// إدارة الـ Modal و الـ Focus
 let lastFocusedElement;
 
 function openLogin() { 
-    lastFocusedElement = document.activeElement; // حفظ آخر عنصر كان عليه التركيز
+    lastFocusedElement = document.activeElement;
     const modal = document.getElementById("loginModal");
     modal.style.display = "flex"; 
     setTimeout(() => {
         modal.style.opacity = "1";
-        document.getElementById('loginEmail').focus(); // نقل التركيز لداخل النافذة
+        document.getElementById('loginEmail').focus();
     }, 10);
 }
 
@@ -30,52 +30,43 @@ function closeLogin() {
     modal.style.opacity = "0";
     setTimeout(() => {
         modal.style.display = "none";
-        if (lastFocusedElement) lastFocusedElement.focus(); // إعادة التركيز للزر اللي فتح النافذة
+        if (lastFocusedElement) lastFocusedElement.focus();
     }, 400);
 }
 
-// دعم زر Escape للإغلاق
-window.addEventListener('keydown', (e) => {
-    if (e.key === "Escape") closeLogin();
+// إظهار وإخفاء كلمة المرور
+document.addEventListener('DOMContentLoaded', () => {
+    const togglePassword = document.querySelector('#togglePassword');
+    const passwordInput = document.getElementById('loginPass');
+    const eyeIcon = document.getElementById('eyeIcon');
+
+    if (togglePassword) {
+        togglePassword.addEventListener('click', () => {
+            const type = passwordInput.type === 'password' ? 'text' : 'password';
+            passwordInput.type = type;
+            eyeIcon.classList.toggle('fa-eye');
+            eyeIcon.classList.toggle('fa-eye-slash');
+        });
+    }
 });
 
-window.onclick = function(event) {
-    if (event.target == document.getElementById("loginModal")) { closeLogin(); }
-}
-
-// فلترة الخدمات (تصحيح عرض الـ Flex)
+// فلترة الخدمات
 function filterServices() {
     let input = document.getElementById('serviceSearch').value.toLowerCase();
     let services = document.getElementsByClassName('service-item');
     for (let service of services) {
-        let text = service.innerText.toLowerCase();
-        // استخدام "" يرجع الـ Display للحالة الأصلية في الـ CSS
-        service.style.display = text.includes(input) ? "" : "none";
+        service.style.display = service.innerText.toLowerCase().includes(input) ? "" : "none";
     }
 }
 
-// معالجة النماذج
+// معالجة تسجيل الدخول
 document.getElementById('loginForm').onsubmit = function(e) {
     e.preventDefault();
-    alert("تم تسجيل الدخول بنجاح!");
-    closeLogin();
+    const errorDiv = document.getElementById('loginError');
+    // محاكاة خطأ بسيط
+    errorDiv.textContent = "يجب التأكد من البيانات أولاً (عرض تجريبي)";
+    errorDiv.style.display = "block";
 }
 
-// حركة الظهور عند التمرير
-const scrollElements = document.querySelectorAll('.animate-on-scroll');
-
-const elementInView = (el, dividend = 1) => {
-  const elementTop = el.getBoundingClientRect().top;
-  return (elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend);
-};
-
-const handleScrollAnimation = () => {
-  scrollElements.forEach((el) => {
-    if (elementInView(el, 1.25)) {
-      el.classList.add('animate-in');
-    }
-  })
-}
-
-window.addEventListener('scroll', handleScrollAnimation);
-handleScrollAnimation(); // تشغيل أولي
+// دعم زر Esc
+window.addEventListener('keydown', (e) => { if (e.key === "Escape") closeLogin(); });

@@ -23,11 +23,19 @@
                     <i class="fas fa-envelope" aria-hidden="true"></i>
                     <input type="email" id="loginEmail" placeholder="البريد الإلكتروني" required>
                 </div>
-                <div class="input-group">
+                <div class="input-group password-group">
                     <label for="loginPass" class="visually-hidden">كلمة المرور</label>
                     <i class="fas fa-lock" aria-hidden="true"></i>
                     <input type="password" id="loginPass" placeholder="كلمة المرور" required>
+                    <button type="button" id="togglePassword" aria-label="إظهار كلمة المرور">
+                        <i class="fas fa-eye" id="eyeIcon"></i>
+                    </button>
                 </div>
+                <div class="remember-me">
+                    <input type="checkbox" id="remember">
+                    <label for="remember">تذكرني على هذا الجهاز</label>
+                </div>
+                <div id="loginError" class="error-msg" aria-live="assertive"></div>
                 <button type="submit" class="btn-login">دخول</button>
             </form>
         </div>
@@ -62,50 +70,7 @@
             </div>
         </section>
 
-        <section class="card animate-on-scroll">
-            <h2><i class="fas fa-trophy" aria-hidden="true"></i> قصص نجاح</h2>
-            <div class="story-item">
-                <img src="https://ui-avatars.com/api/?name=A&background=0077b6&color=fff" alt="صورة المستخدم أحمد محمد">
-                <p>"الإعاقة لم تمنعني من النجاح." - <b>أحمد محمد</b></p>
-            </div>
-        </section>
-
-        <section class="card blog-section animate-on-scroll">
-            <h2><i class="fas fa-feather-alt" aria-hidden="true"></i> مدونة سند التعليمية</h2>
-            <div class="blog-grid">
-                <article class="blog-post">
-                    <div class="blog-image" role="img" aria-label="صورة توضيحية لتهيئة المنزل" style="background-image: url('https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=400');"></div>
-                    <div class="blog-content">
-                        <span class="blog-category">نصائح</span>
-                        <h3>كيفية تهيئة المنزل لمستخدمي الكراسي المتحركة</h3>
-                        <p>خطوات بسيطة لجعل الحركة داخل المنزل أكثر سهولة وأماناً...</p>
-                        <a href="#" class="read-more" aria-label="اقرأ المزيد عن تهيئة المنزل">اقرأ المزيد</a>
-                    </div>
-                </article>
-                <article class="blog-post">
-                    <div class="blog-image" role="img" aria-label="صورة لتطبيقات الموبايل" style="background-image: url('https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=400');"></div>
-                    <div class="blog-content">
-                        <span class="blog-category">تكنولوجيا</span>
-                        <h3>أفضل تطبيقات دعم ضعاف البصر لعام 2026</h3>
-                        <p>تعرف على أحدث التقنيات التي تساعد في قراءة النصوص ووصف المحيط...</p>
-                        <a href="#" class="read-more" aria-label="اقرأ المزيد عن تطبيقات ضعاف البصر">اقرأ المزيد</a>
-                    </div>
-                </article>
-            </div>
-        </section>
-
-        <section class="card animate-on-scroll">
-            <h2><i class="fas fa-paper-plane" aria-hidden="true"></i> تواصل معنا</h2>
-            <form id="contactForm">
-                <div class="form-grid">
-                    <input type="text" placeholder="الاسم" aria-label="الاسم بالكامل" required>
-                    <input type="email" placeholder="البريد الإلكتروني" aria-label="بريدك الإلكتروني" required>
-                </div>
-                <textarea placeholder="رسالتك هنا..." aria-label="اكتب رسالتك هنا" required></textarea>
-                <button type="submit" class="btn-send">إرسال</button>
-            </form>
-        </section>
-    </main>
+        </main>
 
     <footer>
         <p>جميع الحقوق محفوظة © 2026 - منصة سند</p>

@@ -6,7 +6,7 @@
     --text-main: #2d3748;
     --card-bg: #ffffff;
     --shadow: 0 10px 30px rgba(0, 119, 182, 0.08);
-    --transition: all 0.3s ease-in-out;
+    --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* حركة مرنة Bounce */
 }
 
 .dark {
@@ -18,7 +18,7 @@
 
 .high-contrast { background: #000 !important; color: #ffff00 !important; }
 
-/* --- تعريف الحركات (Keyframes) --- */
+/* --- الحركات (Keyframes) --- */
 
 @keyframes gradientBg {
     0% { background-position: 0% 50%; }
@@ -31,206 +31,126 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
-    70% { box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+/* حركة النبض لزر الدخول */
+@keyframes softPulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4); }
+    70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
 }
 
-/* --- تنسيقات الجسم (Body) والخلفية المتحركة --- */
+/* --- التنسيقات العامة --- */
 body {
     margin: 0; font-family: 'Cairo', sans-serif;
-    color: var(--text-main);
-    transition: var(--transition); direction: rtl; line-height: 1.6;
-    overflow-x: hidden;
-    position: relative;
+    color: var(--text-main); transition: 0.3s; direction: rtl; line-height: 1.6;
+    overflow-x: hidden; position: relative;
 }
 
 body::before {
-    content: "";
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    z-index: -1;
-    background: linear-gradient(-45deg, var(--bg-main), var(--primary-light), var(--bg-main), #e3f2fd);
-    background-size: 400% 400%;
-    animation: gradientBg 15s ease infinite;
-    opacity: 0.8;
+    content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1; background: linear-gradient(-45deg, var(--bg-main), var(--primary-light), var(--bg-main), #e3f2fd);
+    background-size: 400% 400%; animation: gradientBg 15s ease infinite; opacity: 0.8;
 }
 
-.dark body::before {
-    background: linear-gradient(-45deg, #1a202c, #2d3748, #1a202c, #10151d);
-    opacity: 1;
-}
-
-/* --- رأس الصفحة (Header) --- */
 header {
     background: linear-gradient(135deg, rgba(0, 119, 182, 0.8) 0%, rgba(255, 183, 3, 0.8) 150%);
-    backdrop-filter: blur(5px);
-    color: white; padding: 60px 20px; text-align: center;
+    backdrop-filter: blur(5px); color: white; padding: 60px 20px; text-align: center;
     clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
     animation: fadeIn 1s ease-out;
 }
 
-/* --- التنقل (Navigation) --- */
+/* --- الأزرار والتفاعل (Buttons Animation) --- */
+button, .login-trigger, .btn-send, .read-more {
+    cursor: pointer; position: relative; overflow: hidden;
+}
+
 nav {
     display: flex; justify-content: space-around; align-items: center;
     padding: 15px; background: var(--card-bg); position: sticky; top: 0; z-index: 100;
-    transition: var(--transition);
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
+/* زر الدخول مع أنيميشن النبض */
+.login-trigger {
+    background: #28a745; color: white; border: none;
+    padding: 10px 25px; border-radius: 25px; font-weight: bold;
+    animation: softPulse 2s infinite ease-in-out;
+    transition: var(--transition);
+}
+
+.login-trigger:hover {
+    background: #218838; transform: scale(1.1); animation: none;
+}
+
+/* أزرار الأدوات (الأيقونات) */
 .nav-tools button {
     background: var(--primary); color: white; border: none;
-    width: 40px; height: 40px; border-radius: 50%; cursor: pointer; margin: 0 5px;
+    width: 40px; height: 40px; border-radius: 50%; margin: 0 5px;
     transition: var(--transition);
 }
 
 .nav-tools button:hover {
-    transform: scale(1.1) rotate(15deg);
+    transform: rotate(20deg) scale(1.2);
     background: var(--accent);
 }
 
-.login-trigger {
-    background: #28a745; color: white; border: none;
-    padding: 10px 20px; border-radius: 25px; cursor: pointer; font-weight: bold;
-    transition: var(--transition);
-    animation: pulse 2s infinite;
+/* زر الإرسال مع تأثير "اللمعة" */
+.btn-send { 
+    width: 100%; padding: 12px; background: var(--primary); color: white; 
+    border: none; border-radius: 10px; transition: var(--transition);
+    z-index: 1;
 }
 
-/* --- الحاويات والبطاقات --- */
+.btn-send::after {
+    content: ''; position: absolute; top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: 0.5s; z-index: -1;
+}
+
+.btn-send:hover::after { left: 100%; }
+
+.btn-send:hover {
+    background: #005f91; transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 119, 182, 0.2);
+}
+
+/* --- المدونة (Blog) --- */
+.blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
+
+.blog-post { 
+    background: var(--bg-main); border-radius: 15px; overflow: hidden; 
+    border: 1px solid rgba(0,0,0,0.05); transition: var(--transition); 
+}
+
+.blog-post:hover { transform: translateY(-10px); box-shadow: var(--shadow); }
+
+.blog-image { height: 160px; background-size: cover; background-position: center; }
+
+.blog-content { padding: 20px; text-align: right; }
+
+.blog-category { 
+    background: var(--primary-light); color: var(--primary); 
+    padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; 
+}
+
+/* أنيميشن زر "اقرأ المزيد" */
+.read-more { 
+    color: var(--primary); text-decoration: none; font-weight: bold; 
+    font-size: 0.9rem; transition: 0.3s; display: inline-block;
+}
+
+.read-more:hover { transform: translateX(-8px); color: var(--accent); }
+
+/* --- البطاقات والأنيميشن عند التمرير --- */
 .container { padding: 40px 20px; max-width: 1000px; margin: auto; }
-
-.animate-on-scroll {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-
-.animate-in {
-    opacity: 1;
-    transform: translateY(0);
-}
 
 .card {
     background: var(--card-bg); padding: 30px; border-radius: 20px;
     box-shadow: var(--shadow); margin-bottom: 30px; border-top: 5px solid var(--primary);
-    transition: var(--transition);
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(0, 119, 182, 0.15);
-}
-
-/* --- قـسـم الـمـدونـة (Blog Section) --- */
-.blog-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-}
-
-.blog-post {
-    background: var(--bg-main);
-    border-radius: 15px;
-    overflow: hidden;
-    border: 1px solid rgba(0,0,0,0.05);
-    transition: var(--transition);
-}
-
-.blog-post:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow);
-}
-
-.blog-image {
-    height: 160px;
-    background-size: cover;
-    background-position: center;
-}
-
-.blog-content {
-    padding: 20px;
-    text-align: right;
-}
-
-.blog-category {
-    background: var(--primary-light);
-    color: var(--primary);
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: bold;
-}
-
-.dark .blog-category {
-    background: var(--primary);
-    color: white;
-}
-
-.blog-post h3 {
-    font-size: 1.1rem;
-    margin: 15px 0 10px;
-    color: var(--text-main);
-}
-
-.blog-post p {
-    font-size: 0.9rem;
-    color: #666;
-    margin-bottom: 15px;
-}
-
-.dark .blog-post p {
-    color: #cbd5e0;
-}
-
-.read-more {
-    color: var(--primary);
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 0.9rem;
     transition: 0.3s;
 }
 
-.read-more:hover {
-    color: var(--accent);
-}
-
-/* --- العناصر التفاعلية الأخرى --- */
-#serviceSearch {
-    width: 100%; padding: 12px; border-radius: 25px; border: 1px solid #ddd; margin-bottom: 20px;
-    transition: var(--transition);
-}
-
-.services-container { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
-
-.service-item {
-    background: var(--bg-main); padding: 15px; border-radius: 15px; width: 150px; text-align: center; 
-    transition: var(--transition);
-}
-
-.story-item { 
-    display: flex; align-items: center; gap: 15px; background: var(--bg-main); 
-    padding: 15px; border-radius: 15px; transition: var(--transition);
-}
-
-.story-item img { width: 50px; height: 50px; border-radius: 50%; }
-
-.btn-send { 
-    width: 100%; padding: 12px; background: var(--primary); color: white; 
-    border: none; border-radius: 10px; cursor: pointer; transition: var(--transition); 
-}
-
-.modal { 
-    display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; 
-    background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); 
-}
-
-.modal-content { 
-    background: var(--card-bg); margin: 10% auto; padding: 30px; width: 320px; 
-    border-radius: 20px; text-align: center; position: relative; 
-}
+.animate-on-scroll { opacity: 0; transform: translateY(30px); transition: 0.6s ease-out; }
+.animate-in { opacity: 1; transform: translateY(0); }
 
 footer { text-align: center; padding: 20px; background: var(--card-bg); margin-top: 40px; }
-
-.large-text { font-size: 1.4rem; }

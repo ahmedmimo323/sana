@@ -5,89 +5,77 @@ function increaseText() { document.body.classList.toggle("large-text"); }
 
 function speak() {
     window.speechSynthesis.cancel();
-    const text = document.querySelector('main').innerText;
+    const text = document.getElementById('mainContent').innerText;
     const msg = new SpeechSynthesisUtterance(text);
     msg.lang = 'ar-SA';
+    msg.rate = 0.9; // سرعة هادئة ومفهومة
     window.speechSynthesis.speak(msg);
 }
 
-// وظائف تسجيل الدخول (Modal)
+// وظائف تسجيل الدخول المحسنة
+let lastFocusedElement;
+
 function openLogin() { 
+    lastFocusedElement = document.activeElement; // حفظ آخر عنصر كان عليه التركيز
     const modal = document.getElementById("loginModal");
-    modal.style.display = "block"; 
-    // إضافة تأخير بسيط لتفعيل حركة الـ Fade In الخاصة بالـ CSS
-    setTimeout(() => modal.style.opacity = "1", 10);
+    modal.style.display = "flex"; 
+    setTimeout(() => {
+        modal.style.opacity = "1";
+        document.getElementById('loginEmail').focus(); // نقل التركيز لداخل النافذة
+    }, 10);
 }
 
 function closeLogin() { 
     const modal = document.getElementById("loginModal");
     modal.style.opacity = "0";
-    // الانتظار حتى تنتهي الحركة قبل إخفاء العنصر تماماً
-    setTimeout(() => modal.style.display = "none", 400);
+    setTimeout(() => {
+        modal.style.display = "none";
+        if (lastFocusedElement) lastFocusedElement.focus(); // إعادة التركيز للزر اللي فتح النافذة
+    }, 400);
 }
 
-// إغلاق النافذة عند الضغط خارجها
+// دعم زر Escape للإغلاق
+window.addEventListener('keydown', (e) => {
+    if (e.key === "Escape") closeLogin();
+});
+
 window.onclick = function(event) {
     if (event.target == document.getElementById("loginModal")) { closeLogin(); }
 }
 
-// فلترة الخدمات بالبحث
+// فلترة الخدمات (تصحيح عرض الـ Flex)
 function filterServices() {
     let input = document.getElementById('serviceSearch').value.toLowerCase();
     let services = document.getElementsByClassName('service-item');
     for (let service of services) {
         let text = service.innerText.toLowerCase();
-        service.style.display = text.includes(input) ? "block" : "none";
+        // استخدام "" يرجع الـ Display للحالة الأصلية في الـ CSS
+        service.style.display = text.includes(input) ? "" : "none";
     }
 }
 
-// معالجة النماذج (Forms)
+// معالجة النماذج
 document.getElementById('loginForm').onsubmit = function(e) {
     e.preventDefault();
     alert("تم تسجيل الدخول بنجاح!");
     closeLogin();
 }
 
-document.getElementById('contactForm').onsubmit = function(e) {
-    e.preventDefault();
-    alert("شكراً لتواصلك معنا، سنرد عليك قريباً.");
-    this.reset();
-}
+// حركة الظهور عند التمرير
+const scrollElements = document.querySelectorAll('.animate-on-scroll');
 
-// --- إضافة حركة الظهور عند التمرير (Scroll Animation) ---
-
-// تحديد العناصر التي نريد تحريكها
-const scrollElements = document.querySelectorAll('.card, .grid, header');
-
-// دالة للتحقق مما إذا كان العنصر في مجال الرؤية
 const elementInView = (el, dividend = 1) => {
   const elementTop = el.getBoundingClientRect().top;
-  return (
-    elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend
-  );
+  return (elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend);
 };
 
-// دالة لإضافة فئة الحركة
-const displayScrollElement = (element) => {
-  element.classList.add('animate-in');
-};
-
-// الدالة الرئيسية للتحكم بالحركة
 const handleScrollAnimation = () => {
   scrollElements.forEach((el) => {
     if (elementInView(el, 1.25)) {
-      displayScrollElement(el);
+      el.classList.add('animate-in');
     }
   })
 }
 
-// إضافة فئة CSS المبدئية للعناصر قبل التمرير
-scrollElements.forEach(el => el.classList.add('animate-on-scroll'));
-
-// تشغيل الدالة عند التمرير
-window.addEventListener('scroll', () => { 
-  handleScrollAnimation();
-});
-
-// تشغيل الدالة مرة واحدة عند تحميل الصفحة لإظهار العناصر المرئية بالفعل
-handleScrollAnimation();
+window.addEventListener('scroll', handleScrollAnimation);
+handleScrollAnimation(); // تشغيل أولي

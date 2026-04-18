@@ -1,72 +1,93 @@
-// وظائف الوصول
+// وظائف الوصول (Accessibility)
 function toggleDark() { document.body.classList.toggle("dark"); }
 function toggleContrast() { document.body.classList.toggle("high-contrast"); }
 function increaseText() { document.body.classList.toggle("large-text"); }
 
 function speak() {
     window.speechSynthesis.cancel();
-    const text = document.getElementById('mainContent').innerText;
+    const text = document.querySelector('main').innerText;
     const msg = new SpeechSynthesisUtterance(text);
     msg.lang = 'ar-SA';
-    msg.rate = 0.9;
     window.speechSynthesis.speak(msg);
 }
 
-// إدارة الـ Modal و الـ Focus
-let lastFocusedElement;
-
+// وظائف تسجيل الدخول (Modal)
 function openLogin() { 
-    lastFocusedElement = document.activeElement;
     const modal = document.getElementById("loginModal");
-    modal.style.display = "flex"; 
-    setTimeout(() => {
-        modal.style.opacity = "1";
-        document.getElementById('loginEmail').focus();
-    }, 10);
+    modal.style.display = "block"; 
+    // إضافة تأخير بسيط لتفعيل حركة الـ Fade In الخاصة بالـ CSS
+    setTimeout(() => modal.style.opacity = "1", 10);
 }
 
 function closeLogin() { 
     const modal = document.getElementById("loginModal");
     modal.style.opacity = "0";
-    setTimeout(() => {
-        modal.style.display = "none";
-        if (lastFocusedElement) lastFocusedElement.focus();
-    }, 400);
+    // الانتظار حتى تنتهي الحركة قبل إخفاء العنصر تماماً
+    setTimeout(() => modal.style.display = "none", 400);
 }
 
-// إظهار وإخفاء كلمة المرور
-document.addEventListener('DOMContentLoaded', () => {
-    const togglePassword = document.querySelector('#togglePassword');
-    const passwordInput = document.getElementById('loginPass');
-    const eyeIcon = document.getElementById('eyeIcon');
+// إغلاق النافذة عند الضغط خارجها
+window.onclick = function(event) {
+    if (event.target == document.getElementById("loginModal")) { closeLogin(); }
+}
 
-    if (togglePassword) {
-        togglePassword.addEventListener('click', () => {
-            const type = passwordInput.type === 'password' ? 'text' : 'password';
-            passwordInput.type = type;
-            eyeIcon.classList.toggle('fa-eye');
-            eyeIcon.classList.toggle('fa-eye-slash');
-        });
-    }
-});
-
-// فلترة الخدمات
+// فلترة الخدمات بالبحث
 function filterServices() {
     let input = document.getElementById('serviceSearch').value.toLowerCase();
     let services = document.getElementsByClassName('service-item');
     for (let service of services) {
-        service.style.display = service.innerText.toLowerCase().includes(input) ? "" : "none";
+        let text = service.innerText.toLowerCase();
+        service.style.display = text.includes(input) ? "block" : "none";
     }
 }
 
-// معالجة تسجيل الدخول
+// معالجة النماذج (Forms)
 document.getElementById('loginForm').onsubmit = function(e) {
     e.preventDefault();
-    const errorDiv = document.getElementById('loginError');
-    // محاكاة خطأ بسيط
-    errorDiv.textContent = "يجب التأكد من البيانات أولاً (عرض تجريبي)";
-    errorDiv.style.display = "block";
+    alert("تم تسجيل الدخول بنجاح!");
+    closeLogin();
 }
 
-// دعم زر Esc
-window.addEventListener('keydown', (e) => { if (e.key === "Escape") closeLogin(); });
+document.getElementById('contactForm').onsubmit = function(e) {
+    e.preventDefault();
+    alert("شكراً لتواصلك معنا، سنرد عليك قريباً.");
+    this.reset();
+}
+
+// --- إضافة حركة الظهور عند التمرير (Scroll Animation) ---
+
+// تحديد العناصر التي نريد تحريكها
+const scrollElements = document.querySelectorAll('.card, .grid, header');
+
+// دالة للتحقق مما إذا كان العنصر في مجال الرؤية
+const elementInView = (el, dividend = 1) => {
+  const elementTop = el.getBoundingClientRect().top;
+  return (
+    elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend
+  );
+};
+
+// دالة لإضافة فئة الحركة
+const displayScrollElement = (element) => {
+  element.classList.add('animate-in');
+};
+
+// الدالة الرئيسية للتحكم بالحركة
+const handleScrollAnimation = () => {
+  scrollElements.forEach((el) => {
+    if (elementInView(el, 1.25)) {
+      displayScrollElement(el);
+    }
+  })
+}
+
+// إضافة فئة CSS المبدئية للعناصر قبل التمرير
+scrollElements.forEach(el => el.classList.add('animate-on-scroll'));
+
+// تشغيل الدالة عند التمرير
+window.addEventListener('scroll', () => { 
+  handleScrollAnimation();
+});
+
+// تشغيل الدالة مرة واحدة عند تحميل الصفحة لإظهار العناصر المرئية بالفعل
+handleScrollAnimation();
